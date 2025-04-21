@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Masiel!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(to bottom right, #fceabb, #f8b500);
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #ff1493;
+      font-size: 3.5rem;
+      margin-top: 1rem;
+      text-shadow: 2px 2px #fff;
+    }
+
+    h2 {
+      color: #6a0572;
+      margin-top: -1rem;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+
+    .images {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem;
+    }
+
+    .images img {
+      width: 220px;
+      height: auto;
+      margin: 10px;
+      border-radius: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      animation: dropIn 1.5s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .images img:nth-child(1) { animation-delay: 0s; }
+    .images img:nth-child(2) { animation-delay: 1s; }
+    .images img:nth-child(3) { animation-delay: 2s; }
+    .images img:nth-child(4) { animation-delay: 3s; }
+    .images img:nth-child(5) { animation-delay: 4s; }
+
+    @keyframes dropIn {
+      0% { transform: translateY(-150px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    audio {
+      margin-top: 2rem;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      background: red;
+      border-radius: 50% 50% 50% 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+
+    #confetti-left, #flower-right {
+      position: fixed;
+      top: 0;
+      width: 50px;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    #confetti-left {
+      left: 0;
+    }
+
+    #flower-right {
+      right: 0;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Happy 23rd Birthday, Masiel! 🎂</h1>
+  <h2>You're amazing, and loved more than you know💕!</h2>
+
+  <div class="images">
+    <img src="images/pic1.jpg" alt="Pic1" />
+    <img src="images/pic2.jpg" alt="Pic2" />
+    <img src="images/pic3.jpg" alt="Pic3" />
+    <img src="images/pic4.jpg" alt="Pic4" />
+    <img src="images/pic5.jpg" alt="Pic5" />
+  </div>
+
+  <audio controls>
+    <source src="photograph.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <canvas id="confetti-left"></canvas>
+  <canvas id="flower-right"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Vibrant confetti from the left
+    setInterval(() => {
+      confetti({
+        origin: { x: 0, y: Math.random() },
+        angle: 60,
+        spread: 150,
+        particleCount: 6,
+        scalar: 1.4,
+        colors: ['#ff0', '#0ff', '#f0f', '#00f', '#0f0', '#f00', '#ffa500', '#9400d3'],
+        shapes: ['circle', 'square']
+      });
+    }, 200);
+
+    // Decorative flower animation on the right
+    function flowers() {
+      const canvas = document.getElementById('flower-right');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 50;
+      canvas.height = window.innerHeight;
+
+      const flowerColors = ['#ff69b4', '#ff1493', '#ffb6c1', '#da70d6', '#ba55d3', '#ff8da1'];
+      const flowers = [];
+      for (let i = 0; i < 50; i++) {
+        flowers.push({
+          x: Math.random() * 50,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 8 + 4,
+          color: flowerColors[Math.floor(Math.random() * flowerColors.length)]
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        flowers.forEach(f => {
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+          ctx.fillStyle = f.color;
+          ctx.fill();
+          f.y += 0.5;
+          if (f.y > canvas.height) f.y = 0;
+        });
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+
+    flowers();
+
+    // Floating balloons
+    function createBalloon() {
+      const b = document.createElement("div");
+      b.classList.add("balloon");
+      b.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      b.style.left = `${Math.random() * window.innerWidth}px`;
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 10000);
+    }
+    setInterval(createBalloon, 1000);
+  </script>
+</body>
+</html>
+
